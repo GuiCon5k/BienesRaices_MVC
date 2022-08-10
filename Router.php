@@ -22,21 +22,17 @@ class Router {
         $rutas_protegidas = ['/admin', '/propiedades/crear', '/propiedades/actualizar', '/propiedades/eliminar',
         '/vendedores/crear', '/vendedores/actualizar', '/vendedores/eliminar'];
 
-        $currentUrl = ($_SERVER['REQUEST_URI'] === '') ? '/' :  $_SERVER['REQUEST_URI'] ;
-        $method = $_SERVER['REQUEST_METHOD'];
-            
-        //dividimos la URL actual cada vez que exista un '?' eso indica que se están pasando variables por la url
-        $splitURL = explode('?', $currentUrl);
-        // debuguear($splitURL);
+        $urlActual = $_SERVER['REQUEST_URI'] === '' ? '/' : $_SERVER['REQUEST_URI'];
+        $metodo = $_SERVER['REQUEST_METHOD'];
         
-        if ($method === 'GET') {
-            $fn = $this->getRoutes[$splitURL[0]] ?? null; //$splitURL[0] contiene la URL sin variables 
+        if($metodo === 'GET') {
+            $fn = $this->rutasGET[$urlActual] ?? null;
         } else {
-        $fn = $this->postRoutes[$splitURL[0]] ?? null;
+            $fn = $this->rutasPOST[$urlActual] ?? null;
         }
 
         //Proteger las rutas
-        if(in_array($currentUrl, $rutas_protegidas) && !$auth) {
+        if(in_array($urlActual, $rutas_protegidas) && !$auth) {
             header('Location: /');
         }
 
