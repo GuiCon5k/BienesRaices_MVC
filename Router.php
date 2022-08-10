@@ -24,13 +24,11 @@ class Router {
 
         $urlActual = $_SERVER['REQUEST_URI'] === '' ? '/' : $_SERVER['REQUEST_URI'];
         $metodo = $_SERVER['REQUEST_METHOD'];
-
-        $splitURL = explode('?', $urlActual);
         
         if($metodo === 'GET') {
-            $fn = $this->rutasGET[$splitURL] ?? null;
+            $fn = $this->rutasGET[$urlActual] ?? null;
         } else {
-            $fn = $this->rutasPOST[$splitURL] ?? null;
+            $fn = $this->rutasPOST[$urlActual] ?? null;
         }
 
         //Proteger las rutas
