@@ -22,15 +22,6 @@ class Router {
         $rutas_protegidas = ['/admin', '/propiedades/crear', '/propiedades/actualizar', '/propiedades/eliminar',
         '/vendedores/crear', '/vendedores/actualizar', '/vendedores/eliminar'];
 
-        $urlActual = $_SERVER['REQUEST_URI'] === '' ? '/' : $_SERVER['REQUEST_URI'];
-        $metodo = $_SERVER['REQUEST_METHOD'];
-        
-        if($metodo === 'GET') {
-            $fn = $this->rutasGET[$urlActual] ?? null;
-        } else {
-            $fn = $this->rutasPOST[$urlActual] ?? null;
-        }
-
         $currentUrl = ($_SERVER['REQUEST_URI'] === '') ? '/' :  $_SERVER['REQUEST_URI'] ;
         $method = $_SERVER['REQUEST_METHOD'];
             
@@ -45,7 +36,7 @@ class Router {
         }
 
         //Proteger las rutas
-        if(in_array($urlActual, $rutas_protegidas) && !$auth) {
+        if(in_array($currentUrl, $rutas_protegidas) && !$auth) {
             header('Location: /');
         }
 
